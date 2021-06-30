@@ -8,9 +8,10 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FlightService } from './flight.service';
 import { CityPipe } from '../../shared/pipes/city.pipe';
 import { BehaviorSubject, Observable, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
+import { FlightCardComponent } from '../flight-card/flight-card.component';
 
 @Component({
-  imports: [CommonModule, FormsModule, CityPipe],
+  imports: [CommonModule, FormsModule, CityPipe, FlightCardComponent],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.component.css',
@@ -32,6 +33,11 @@ export class FlightSearchComponent implements OnDestroy {
 
   protected message = '';
 
+  protected basket: { [id: number]: boolean } = {
+    3: true,
+    5: true,
+  };
+
   // private getDateCounter = 0;
 
   private readonly destroyRef = inject(DestroyRef);
@@ -40,7 +46,9 @@ export class FlightSearchComponent implements OnDestroy {
   constructor() {
     effect(() => console.log(this.flightsLength() + ' flight(s) found.')); // similar to RxJS tap()
 
-    this.onSearch();
+    if (this.from && this.to) {
+      this.onSearch();
+    }
   }
 
   ngOnDestroy(): void {
