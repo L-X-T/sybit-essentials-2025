@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 import { DatePipe } from '@angular/common';
 
 import { Flight } from '../../entities/flight';
+import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-status-toggle.component';
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, FlightStatusToggleComponent],
   selector: 'app-flight-card',
   templateUrl: './flight-card.component.html',
   styleUrls: ['./flight-card.component.css'],
@@ -33,13 +34,13 @@ export class FlightCardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   protected onSelect(): void {
-    this.selected = true;
+    // this.selected = true;
     this.debugInputs('onSelect');
     this.selectedChange.emit(true);
   }
 
   protected onDeselect(): void {
-    this.selected = false;
+    // this.selected = false;
     this.debugInputs('onDeselect');
     this.selectedChange.emit(false);
   }
