@@ -1,7 +1,20 @@
-import { Component } from '@angular/core';
-
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
+
+interface Interface {
+  title: string;
+  desc?: string;
+}
+
+enum Direction {
+  UP = 'up',
+  DOWN = 'down',
+  LEFT = 'left',
+  RIGHT = 'right',
+}
+
+type OtherDirection = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 @Component({
   imports: [SidebarComponent, NavbarComponent],
@@ -9,6 +22,55 @@ import { NavbarComponent } from './navbar/navbar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  protected readonly title = 'Hello World!';
+export class AppComponent implements OnInit, OnDestroy {
+  aBoolean = true;
+  aString?: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+  aNumber = 0;
+
+  someStrings: string[] = [];
+  numberOrString: number | string;
+
+  @Output() eventEmitter = new EventEmitter<void>();
+
+  constructor() {
+    this.aBoolean = !!'string';
+    console.warn('constructor');
+
+    this.numberOrString = '2';
+    this.numberOrString = 2;
+
+    const i: Interface = { title: 'title' };
+
+    this.takeMyInput(1);
+    this.takeMyInput(1, '1');
+
+    console.log(this.aNumber?.toString());
+
+    if (this.aNumber !== null && this.aNumber !== undefined) {
+      console.log(this.aNumber.toString());
+    } else {
+      console.log(this.aNumber);
+    }
+
+    const myEnum: Direction = Direction.DOWN;
+    const myType: OtherDirection = 'UP';
+
+    console.log(myEnum);
+  }
+
+  ngOnInit(): void {
+    console.log('initialized');
+  }
+
+  ngOnDestroy(): void {
+    console.log('destroyed');
+  }
+
+  takeMyInput(sth: number, numberOrString: number | string = '1'): number | Function {
+    if (typeof numberOrString === 'number') {
+      return numberOrString;
+    } else {
+      return (numberOrString: string) => numberOrString;
+    }
+  }
 }
