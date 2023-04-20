@@ -23,4 +23,7 @@
       }}".
     </div>
   }
+  @if (errors()?.['asyncCity']) {
+    <div class="text-danger">No flight starting from "{{ errors()?.['asyncCity'] }}".</div>
+  }
 }
