@@ -4,16 +4,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm } from '@angular/forms';
 
 import { Flight } from '../../entities/flight';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FlightService } from '../shared/services/flight.service';
 import { CityPipe } from '../../shared/pipes/city.pipe';
 import { BehaviorSubject, Observable, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
 import { FlightCardComponent } from '../flight-card/flight-card.component';
 import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-status-toggle.component';
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
-import { CityValidatorDirective } from '../shared/validation/city-validator.directive';
 import { AsyncCityValidatorDirective } from '../shared/validation/async-city-validator.directive';
 import { RoundTripValidatorDirective } from '../shared/validation/round-trip-validator.directive';
+import { FlightEditComponent } from '../flight-edit/flight-edit.component';
 
 @Component({
   imports: [
@@ -23,9 +23,9 @@ import { RoundTripValidatorDirective } from '../shared/validation/round-trip-val
     FlightCardComponent,
     FlightStatusToggleComponent,
     FlightValidationErrorsComponent,
-    CityValidatorDirective,
     AsyncCityValidatorDirective,
     RoundTripValidatorDirective,
+    FlightEditComponent,
   ],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
@@ -50,6 +50,7 @@ export class FlightSearchComponent implements OnDestroy {
   readonly terminator$ = this.onDestroySubject.asObservable();
 
   protected selectedFlight?: Flight;
+  protected flightToEdit?: Flight;
 
   protected message = '';
 
@@ -121,7 +122,7 @@ export class FlightSearchComponent implements OnDestroy {
     this.selectedFlight = selectedFlight;
   }
 
-  protected onSave(): void {
+  /*protected onSave(): void {
     if (this.selectedFlight) {
       this.flightService
         .save(this.selectedFlight)
@@ -138,12 +139,5 @@ export class FlightSearchComponent implements OnDestroy {
           },
         });
     }
-  }
-
-  protected getDate(flight: Flight): string {
-    // console.warn('[FSC -> getDate] called #' + ++this.getDateCounter);
-
-    const datePipe = new DatePipe('en-US');
-    return datePipe.transform(new Date(flight.date), 'dd.MM.yyyy HH:mm') || '';
-  }
+  }*/
 }
