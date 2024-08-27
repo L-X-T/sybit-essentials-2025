@@ -9,9 +9,10 @@ import { FlightService } from './flight.service';
 import { CityPipe } from '../../shared/pipes/city.pipe';
 import { BehaviorSubject, Observable, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
 import { FlightCardComponent } from '../flight-card/flight-card.component';
+import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-status-toggle.component';
 
 @Component({
-  imports: [CommonModule, FormsModule, CityPipe, FlightCardComponent],
+  imports: [CommonModule, FormsModule, CityPipe, FlightCardComponent, FlightStatusToggleComponent],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.component.css',
