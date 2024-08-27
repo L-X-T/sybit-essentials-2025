@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FlightSearchComponent } from './flight-search/flight-search.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FlightSearchComponent } from './flight-booking/flight-search/flight-search.component';
 
 @Component({
   imports: [SidebarComponent, NavbarComponent, FlightSearchComponent],
