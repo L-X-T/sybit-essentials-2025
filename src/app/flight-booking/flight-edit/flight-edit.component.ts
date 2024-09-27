@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -24,6 +24,7 @@ export class FlightEditComponent {
   private readonly fb = inject(FormBuilder);
 
   readonly flight = input<Flight | null>(null);
+  readonly flightChange = output<Flight>();
 
   protected editForm = this.fb.group(
     {
@@ -83,6 +84,8 @@ export class FlightEditComponent {
   protected onSave(): void {
     this.flightService.save(this.editForm.value as Flight).subscribe({
       next: (flight) => {
+        console.log('saved flight:', flight);
+        this.flightChange.emit(flight);
         this.message = 'Success!';
       },
       error: (err: HttpErrorResponse) => {
