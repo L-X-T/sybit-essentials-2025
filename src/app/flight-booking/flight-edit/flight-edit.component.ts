@@ -2,6 +2,7 @@ import { Component, DestroyRef, effect, inject, input, output } from '@angular/c
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { Flight } from '../../entities/flight';
@@ -23,9 +24,14 @@ export class FlightEditComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly flightService = inject(FlightService);
   private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
 
   readonly flight = input<Flight | null>(null);
   readonly flightChange = output<Flight>();
+
+  protected debug = true;
+  protected id = '';
+  protected showDetails = '';
 
   protected editForm = this.fb.group(
     {
@@ -73,6 +79,11 @@ export class FlightEditComponent {
       console.log(value);
     });
 
+  private readonly paramsSubscription = this.route.params.subscribe((params) => {
+    this.id = params['id'];
+    this.showDetails = params['showDetails'];
+  });
+
   constructor() {
     effect(() => {
       const flight = this.flight();
@@ -85,12 +96,16 @@ export class FlightEditComponent {
   protected onSave(): void {
     this.flightService.save(this.editForm.value as Flight).subscribe({
       next: (flight) => {
-        console.log('saved flight:', flight);
+        if (this.debug) {
+          console.log('saved flight:', flight);
+        }
         this.flightChange.emit(flight);
         this.message = 'Success!';
       },
       error: (err: HttpErrorResponse) => {
-        console.error('Error', err);
+        if (this.debug) {
+          console.error('save error:', err);
+        }
         this.message = 'Error!';
       },
     });
