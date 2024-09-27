@@ -8,7 +8,7 @@ export class CityPipe implements PipeTransform {
 
   transform(value: string, format?: string): string {
     // console.warn('[CityPipe -> transform] called #' + ++CityPipe.counter);
-    
+
     let short, long;
 
     switch (value) {

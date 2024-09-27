@@ -8,9 +8,8 @@ describe('FlightLookaheadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlightLookaheadComponent]
-    })
-    .compileComponents();
+      imports: [FlightLookaheadComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FlightLookaheadComponent);
     component = fixture.componentInstance;
