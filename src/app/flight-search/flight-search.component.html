@@ -45,6 +45,7 @@
               <td>{{ flight.from | city: 'short' }}</td>
               <td>{{ flight.to | city }}</td>
               <td>{{ flight.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+              <!-- <td>{{ getDate(flight) }}</td> -->
               <td>
                 <a (click)="onSelect(flight)">Edit</a>
               </td>

@@ -4,7 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'city',
 })
 export class CityPipe implements PipeTransform {
+  // private static counter = 0;
+
   transform(value: string, format?: string): string {
+    // console.warn('[CityPipe -> transform] called #' + ++CityPipe.counter);
+    
     let short, long;
 
     switch (value) {

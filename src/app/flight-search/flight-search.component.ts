@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { Flight } from '../entities/flight';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FlightService } from './flight.service';
 import { CityPipe } from '../shared/pipes/city.pipe';
 
@@ -20,6 +20,8 @@ export class FlightSearchComponent {
   protected selectedFlight?: Flight;
 
   protected message = '';
+
+  // private getDateCounter = 0;
 
   // constructor(private readonly flightService: FlightService) {}
   private readonly flightService = inject(FlightService);
@@ -56,5 +58,12 @@ export class FlightSearchComponent {
         },
       });
     }
+  }
+
+  protected getDate(flight: Flight): string {
+    // console.warn('[FSC -> getDate] called #' + ++this.getDateCounter);
+
+    const datePipe = new DatePipe('en-US');
+    return datePipe.transform(new Date(flight.date), 'dd.MM.yyyy HH:mm') || '';
   }
 }
