@@ -11,4 +11,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 })
 export class AppComponent {
   protected readonly title = 'Hello World!';
+
+  constructor() {
+    console.warn('AppComponent initialized');
+    console.log(`Title: ${this.title}`);
+  }
 }
