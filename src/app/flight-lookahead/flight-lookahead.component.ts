@@ -29,14 +29,21 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 export class FlightLookaheadComponent {
   private readonly http = inject(HttpClient);
 
-  protected readonly control = new FormControl<string>('', { nonNullable: true }); // typed FormControl, since NG 14
+  protected readonly fromControl = new FormControl<string>('', { nonNullable: true }); // typed FormControl, since NG 14
+  protected readonly toControl = new FormControl<string>('', { nonNullable: true }); // typed FormControl, since NG 14
   protected isLoading = false;
   protected readonly flights$: Observable<Flight[]>;
   protected readonly sizeDifference$: Observable<number>;
   protected readonly online$: Observable<boolean>;
 
   constructor() {
-    const input$ = this.control.valueChanges.pipe(
+    const fromInput$ = this.fromControl.valueChanges.pipe(
+      filter((input) => input.length >= 3),
+      debounceTime(300),
+      distinctUntilChanged(),
+    );
+
+    const toInput$ = this.toControl.valueChanges.pipe(
       filter((input) => input.length >= 3),
       debounceTime(300),
       distinctUntilChanged(),
@@ -49,13 +56,13 @@ export class FlightLookaheadComponent {
       share(),
     );
 
-    this.flights$ = combineLatest([input$, this.online$]).pipe(
-      filter(([, online]: [string, boolean]) => online),
-      map(([input]) => input),
-      distinctUntilChanged(),
-      tap((input) => (this.isLoading = true)),
-      switchMap((input) => this.load(input)),
-      tap((v) => (this.isLoading = false)),
+    this.flights$ = combineLatest([fromInput$, toInput$, this.online$]).pipe(
+      filter(([, , online]: [string, string, boolean]) => online),
+      map(([fromInput, toInput]) => ({ fromInput, toInput })),
+      distinctUntilChanged((x, y) => x.fromInput === y.fromInput && x.toInput === y.toInput),
+      tap(() => (this.isLoading = true)),
+      switchMap(({ fromInput, toInput }) => this.load(fromInput, toInput)),
+      tap(() => (this.isLoading = false)),
       share(),
     );
 
@@ -70,9 +77,9 @@ export class FlightLookaheadComponent {
     });
   }
 
-  private load(fromAirport: string): Observable<Flight[]> {
+  private load(fromAirport: string, toAirport: string): Observable<Flight[]> {
     const url = 'https://demo.angulararchitects.io/api/Flight';
-    const params = new HttpParams().set('from', fromAirport);
+    const params = new HttpParams().set('from', fromAirport).set('to', toAirport);
     const headers = new HttpHeaders().set('Accept', 'application/json');
 
     return this.http.get<Flight[]>(url, { params, headers }).pipe(delay(1_000));
