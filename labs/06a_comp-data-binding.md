@@ -1,8 +1,10 @@
 # Angular Components Data Binding
 
-- [Angular Components Data Binding](#angular-components)
+<!-- TOC -->
+- [Components Data Binding](#components-data-binding)
   - [FlightCardComponent](#flightcardcomponent)
-  - [FlightStatusToggleComponent \*](#flightstatustogglecomponent-)
+  - [Bonus: FlightStatusToggleComponent \*](#bonus-flightstatustogglecomponent-)
+<!-- TOC -->
 
 ## Components Data Binding
 
@@ -156,5 +158,5 @@ In this exercise, you will first create the FlightCardComponent shown. Then you 
 Create a _FlightStatusToggleComponent_ that receives the delayed flag of a flight via two-way binding and displays it as a link. Each time you click on this link, the status should be changed. The component should be able to be called in the template of the FlightCardComponent as follows:
 
 ```html
-<app-flight-status-toggle [(delayed)]="item.delayed" />
+<app-flight-status-toggle [(delayed)]="item().delayed" />
 ```
