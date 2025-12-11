@@ -32,7 +32,7 @@ import { RoundTripValidatorDirective } from '../shared/validation/round-trip-val
   styleUrl: './flight-search.component.css',
 })
 export class FlightSearchComponent implements OnDestroy {
-  readonly flightSearchForm = viewChild.required<NgForm>('flightSearchForm');
+  readonly flightSearchForm = viewChild<NgForm>('flightSearchForm');
 
   protected from = 'Hamburg';
   protected to = 'Graz';
@@ -84,8 +84,8 @@ export class FlightSearchComponent implements OnDestroy {
   }
 
   protected onSearch(): void {
-    if (this.flightSearchForm().invalid) {
-      this.flightSearchForm().form.markAllAsTouched();
+    if (this.flightSearchForm()?.invalid) {
+      this.flightSearchForm()?.form.markAllAsTouched();
       return;
     }
 
