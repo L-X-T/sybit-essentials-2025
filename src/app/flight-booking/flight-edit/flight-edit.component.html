@@ -4,8 +4,8 @@
     <input formControlName="id" class="form-control" id="id" />
   </div>
 
-  @if (editForm.controls['id'] && editForm.controls['id'].errors && editForm.controls['id'].touched) {
-    <app-flight-validation-errors [errors]="editForm.controls['id'].errors" fieldLabel="Id" />
+  @if (editForm.controls.id.errors && editForm.controls.id.touched) {
+    <app-flight-validation-errors [errors]="editForm.controls.id.errors" fieldLabel="Id" />
   }
 
   <div class="form-group">
@@ -13,12 +13,12 @@
     <input formControlName="from" class="form-control" id="from" />
   </div>
 
-  @if (editForm.controls['from'] && editForm.controls['from'].pending) {
+  @if (editForm.controls.from && editForm.controls.from.pending) {
     <div class="text-warning">... Executing Async Validator(s) ...</div>
   }
 
-  @if (editForm.controls['from'] && editForm.controls['from'].errors && editForm.controls['from'].touched) {
-    <app-flight-validation-errors [errors]="editForm.controls['from'].errors" fieldLabel="From" />
+  @if (editForm.controls.from && editForm.controls.from.errors && editForm.controls.from.touched) {
+    <app-flight-validation-errors [errors]="editForm.controls.from  .errors" fieldLabel="From" />
   }
 
   <div class="form-group">
@@ -26,8 +26,8 @@
     <input formControlName="to" class="form-control" id="to" />
   </div>
 
-  @if (editForm.controls['to'] && editForm.controls['to'].errors && editForm.controls['to'].touched) {
-    <app-flight-validation-errors [errors]="editForm.controls['to'].errors" fieldLabel="To" />
+  @if (editForm.controls.to && editForm.controls.to.errors && editForm.controls.to.touched) {
+    <app-flight-validation-errors [errors]="editForm.controls.to.errors" fieldLabel="To" />
   }
 
   <div class="form-group">
@@ -35,8 +35,8 @@
     <input formControlName="date" class="form-control" id="date" />
   </div>
 
-  @if (editForm.controls['date'] && editForm.controls['date'].errors && editForm.controls['date'].touched) {
-    <app-flight-validation-errors [errors]="editForm.controls['date'].errors" fieldLabel="Date" />
+  @if (editForm.controls.date && editForm.controls.date.errors && editForm.controls.date.touched) {
+    <app-flight-validation-errors [errors]="editForm.controls.date.errors" fieldLabel="Date" />
   }
 
   @if (editForm.errors && editForm.dirty) {
